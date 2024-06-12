@@ -1,12 +1,89 @@
-.content{
-  padding: 24px;
+table {
+  width: 80%;
+  margin: 50px auto;
+  border-collapse: collapse;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-mat-toolbar{
-  position: relative;
-  z-index: 5;
+th, td {
+  border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
-mat-sidenav-container{
-  height: calc(100vh - 64px);
+
+.buttons-acao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.buttons-acao button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttons-acao button:hover {
+  background-color: #0056b3;
+}
+.c-formContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+}
+
+.c-form__input {
+  width: 300px;
+  max-width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.c-form__select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.c-form__input::placeholder {
+  color: #999;
+}
+
+.c-form__input:focus,
+.c-form__select:focus {
+  border-color: #3f51b5;
+  outline: none;
+  box-shadow: 0 0 5px rgba(63, 81, 181, 0.5);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  background-color: #f5f5f5;
+  padding: 10px;
+  text-align: left;
+}
+
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.button-add{
+  display: flex;
+  flex-direction: row-reverse;
 }
