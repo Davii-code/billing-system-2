@@ -1,3 +1,19 @@
+<div class="filter-graf">
+  <mat-form-field appearance="fill">
+    <mat-select [(value)]="priceType" (selectionChange)="onPriceTypeChange($event)">
+      <mat-option value="salePrice">Preço de Venda</mat-option>
+      <mat-option value="productPrice">Preço do Produto</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-select [(value)]="personType" (selectionChange)="onPersonTypeChange($event)">
+      <mat-option value="client">Cliente</mat-option>
+      <mat-option value="seller">Vendedor</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 <div class="grafic">
   <div echarts [options]="chartOption" class="charts-bar"></div>
 

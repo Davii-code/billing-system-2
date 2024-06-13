@@ -13,3 +13,11 @@
   width: 100%;
   height: 50%;
 }
+.filter-graf{
+  display: flex;
+  flex-direction: row;
+
+  >mat-form-field{
+    margin: 20px;
+  }
+}
