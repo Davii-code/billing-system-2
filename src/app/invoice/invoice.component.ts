@@ -17,6 +17,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatFormField, MatInput} from "@angular/material/input";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatOption, MatSelect} from "@angular/material/select";
+import {SalesComponent} from "../sales/sales.component";
 
 
 @Component({
@@ -86,5 +87,15 @@ export class InvoiceComponent {
     };
 
     this.dataSource.filter = filterValue;
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(SalesComponent, {
+      width: '700px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.carregarDados();
+    });
   }
 }

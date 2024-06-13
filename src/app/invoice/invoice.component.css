@@ -9,6 +9,27 @@ th, td {
   border-bottom: 1px solid #ddd;
   text-align: center;
 }
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-field {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
+
 
 
 .buttons-acao {
@@ -32,41 +53,9 @@ th, td {
 .buttons-acao button:hover {
   background-color: #0056b3;
 }
-.c-formContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px;
+.c-form__input{
+  margin: 20px;
 }
-
-.c-form__input {
-  width: 300px;
-  max-width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.c-form__select {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin: 10px;
-}
-
-.c-form__input::placeholder {
-  color: #999;
-}
-
-.c-form__input:focus,
-.c-form__select:focus {
-  border-color: #3f51b5;
-  outline: none;
-  box-shadow: 0 0 5px rgba(63, 81, 181, 0.5);
-}
-
 table {
   width: 100%;
   border-collapse: collapse;

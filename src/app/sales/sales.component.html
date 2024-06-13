@@ -1,0 +1,65 @@
+<div class="form-container">
+  <form [formGroup]="vendaForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Cliente</mat-label>
+        <input matInput formControlName="client" placeholder="Nome do Cliente">
+        <mat-error *ngIf="vendaForm.get('client')?.hasError('required')">
+          Cliente é obrigatório!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Vendedor</mat-label>
+        <input matInput formControlName="seller" placeholder="Nome do Vendedor">
+        <mat-error *ngIf="vendaForm.get('seller')?.hasError('required')">
+          Vendedor é obrigatório!
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Produto</mat-label>
+        <input matInput formControlName="product" placeholder="Nome do Produto">
+        <mat-error *ngIf="vendaForm.get('product')?.hasError('required')">
+          Produto é obrigatório!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Situação</mat-label>
+        <mat-select formControlName="situation">
+          <mat-option value="Pendente">Pendente</mat-option>
+          <mat-option value="Concluída">Concluída</mat-option>
+          <mat-option value="Cancelada">Cancelada</mat-option>
+        </mat-select>
+        <mat-error *ngIf="vendaForm.get('situation')?.hasError('required')">
+          Situação é obrigatória!
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Preço do Produto</mat-label>
+        <input matInput formControlName="productPrice" placeholder="Preço do Produto" type="number">
+        <mat-error *ngIf="vendaForm.get('productPrice')?.hasError('required')">
+          Preço do Produto é obrigatório!
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Preço de Venda</mat-label>
+        <input matInput formControlName="salePrice" placeholder="Preço de Venda" type="number">
+        <mat-error *ngIf="vendaForm.get('salePrice')?.hasError('required')">
+          Preço de Venda é obrigatório!
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Fechar</button>
+      <button mat-button color="primary" type="submit">
+        Cadastrar
+      </button>
+    </div>
+  </form>
+</div>

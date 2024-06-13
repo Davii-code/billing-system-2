@@ -1,19 +1,22 @@
 
 <div class="button-add">
-  <button mat-raised-button color="primary">Adicionar +</button>
+  <button mat-raised-button color="primary" (click)="openDialog()">Adicionar +</button>
 </div>
 
-<div class="c-formContainer">
-  <form class="c-form" action="">
-    <input matInput class="c-form__input filter-input" placeholder="Filtrar" (keyup)="applyFilter($event)" type="text">
-    <select class="c-form__select" (change)="applySituationFilter($event)">
-      <option value="">Todas</option>
-      <option value="OPEN">Aberto</option>
-      <option value="CLOSED">Fechado</option>
-    </select>
+<div >
+  <form action="">
+    <mat-form-field class="c-form__input">
+      <input matInput placeholder="Filtrar" (keyup)="applyFilter($event)" type="text">
+    </mat-form-field>
+    <mat-form-field >
+      <mat-select placeholder="Situação" (selectionChange)="applySituationFilter($event)">
+        <mat-option value="">Todas</mat-option>
+        <mat-option value="OPEN">Aberto</mat-option>
+        <mat-option value="CLOSED">Fechado</mat-option>
+      </mat-select>
+    </mat-form-field>
   </form>
 </div>
-
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> Código </th>
