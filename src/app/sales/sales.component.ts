@@ -54,13 +54,6 @@ export class SalesComponent {
   onSubmit() {
     // Verifica se o formulário é válido
     if (this.vendaForm.valid) {
-      let salePrice = this.vendaForm.get("salePrice")?.value;
-      salePrice = salePrice.replace(/^R\$/i, '');
-      this.vendaForm.get("salePrice")?.setValue(salePrice);
-
-      let productPrice = this.vendaForm.get("productPrice")?.value;
-      productPrice = productPrice.replace(/^R\$/i, '');
-      this.vendaForm.get("productPrice")?.setValue(productPrice)
 
       this.servico.save(this.vendaForm.value).subscribe(
         resposta => {

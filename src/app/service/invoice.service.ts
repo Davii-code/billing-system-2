@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Sale} from "../../shared/sale";
+import {SaleDateRange} from "../../shared/SaleDateRange";
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,22 @@ export class InvoiceService {
 
   delete( id:number):Observable<any[]>{
     return this.http.delete<Sale[]>(this.baseUrl+"/"+id)
+  }
+  getTotalSalesPrice(initialDate: string, finalDate: string): Observable<any[]> {
+    const body: SaleDateRange = { initialDate, finalDate };
+
+    return this.http.post<any[]>(`${this.baseUrl}/totalSalesPricePerDate`, body)
+  }
+
+  getClienteTotal(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/totalCliente`);
+  }
+
+  getProdutoTotal(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/totalProduto`);
+  }
+
+  getVendedorTotal(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/totalVendedor`);
   }
 }

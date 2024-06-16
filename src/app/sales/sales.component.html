@@ -28,9 +28,8 @@
       <mat-form-field class="form-field">
         <mat-label>Situação</mat-label>
         <mat-select formControlName="situation">
-          <mat-option value="Pendente">Pendente</mat-option>
-          <mat-option value="Concluída">Concluída</mat-option>
-          <mat-option value="Cancelada">Cancelada</mat-option>
+          <mat-option value="OPEN">Aberto</mat-option>
+          <mat-option value="CLOSED">Fechado</mat-option>
         </mat-select>
         <mat-error *ngIf="vendaForm.get('situation')?.hasError('required')">
           Situação é obrigatória!
