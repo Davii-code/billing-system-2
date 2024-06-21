@@ -1,6 +1,6 @@
 
 <div class="button-add">
-  <button mat-raised-button color="primary" (click)="openDialog()">Adicionar +</button>
+  <button mat-raised-button color="primary" (click)="openDialogAdicionar()">Adicionar +</button>
 </div>
 
 <div >
@@ -8,7 +8,7 @@
     <mat-form-field class="c-form__input">
       <input matInput placeholder="Filtrar" (keyup)="applyFilter($event)" type="text">
     </mat-form-field>
-    <mat-form-field >
+    <mat-form-field>
       <mat-select placeholder="Situação" (selectionChange)="applySituationFilter($event)">
         <mat-option value="">Todas</mat-option>
         <mat-option value="OPEN">Aberto</mat-option>
@@ -56,8 +56,8 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Ações </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button ><mat-icon>edit</mat-icon></button>
-      <button mat-icon-button ><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button (click)="openDialogEditar(element)"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button (click)="executeDelete(element)"><mat-icon>delete</mat-icon></button>
     </td>
   </ng-container>
 

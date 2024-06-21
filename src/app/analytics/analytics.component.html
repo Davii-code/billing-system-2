@@ -1,3 +1,14 @@
+<div class="filter-section">
+  <mat-form-field appearance="fill">
+    <mat-label>Filtro de Período</mat-label>
+    <mat-select [(value)]="selectedPeriod" (selectionChange)="applyPeriodFilter()">
+      <mat-option value="1">Último Mês</mat-option>
+      <mat-option value="2">Últimos Dois Meses</mat-option>
+      <mat-option value="3">Últimos Três Meses</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
 <div class="card-analytics">
   <mat-card class="cliente-card" appearance="outlined" *ngIf="clienteData">
     <mat-card-header>

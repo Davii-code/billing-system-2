@@ -24,7 +24,7 @@ import {SidenavConteudoComponent} from "./sidenav-conteudo/sidenav-conteudo.comp
 export class AppComponent {
   title = 'billing-system-angula';
 
-  collapsed=signal(false);
+  collapsed=signal(true);
 
-  sidenavWidth = computed(()=>this.collapsed() ? '65px':'250px')
+  sidenavWidth = computed(()=>this.collapsed() ? '80px':'250px')
 }

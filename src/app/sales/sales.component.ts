@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent} from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef
+} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
 import {MatOption} from "@angular/material/autocomplete";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -8,6 +15,9 @@ import {MatSelect} from "@angular/material/select";
 import {MatInput} from "@angular/material/input";
 import {InvoiceService} from "../service/invoice.service";
 import {NgIf} from "@angular/common";
+import {DialogMessageOkComponent} from "../core/dialog-message-ok/dialog-message-ok.component";
+import {Sale} from "../../shared/sale";
+import {NgxMaskDirective, provideNgxMask} from "ngx-mask";
 
 @Component({
   selector: 'app-sales',
@@ -24,67 +34,73 @@ import {NgIf} from "@angular/common";
     MatSelect,
     MatInput,
     NgIf,
-    MatDialogContent
+    MatDialogContent,
+    NgxMaskDirective
   ],
+  providers: [provideNgxMask()],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })
-export class SalesComponent {
+export class SalesComponent implements OnInit {
   vendaForm!: FormGroup;
+  private dialogRef!: MatDialogRef<any>;
 
   constructor(
     private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: Sale,
     private servico: InvoiceService,
-    public dialog: MatDialog
+    private dialog: MatDialog,
+    private dialogRefCurrent: MatDialogRef<SalesComponent>
   ) {}
 
   ngOnInit(): void {
     this.vendaForm = this.formBuilder.group({
-      id: [null], // O ID pode ser preenchido automaticamente ou deixado em branco, dependendo da lógica do seu aplicativo
-      situation: ['', Validators.required],
-      salePrice: ['', Validators.required],
-      productPrice: ['', Validators.required],
-      product: ['', Validators.required],
-      client: ['', Validators.required],
-      seller: ['', Validators.required],
-      createdDate: [new Date(), Validators.required] // Definindo a data de criação como a data atual
+      id: [this.data?.id || ''],
+      situation: [this.data?.situation === 'OPEN' ? '0' : this.data?.situation === 'CLOSED' ? '1' : '', Validators.required],
+      salePrice: [this.data?.salePrice || '', Validators.required],
+      productPrice: [this.data?.productPrice || '', Validators.required],
+      product: [{ value: this.data?.product || '', disabled: false }, Validators.required],
+      client: [{ value: this.data?.client || '', disabled: !!this.data?.id}, Validators.required],
+      seller: [{ value: this.data?.seller || '',disabled: !!this.data?.id  }, Validators.required],
+      createdDate: [this.data?.createdDate ? new Date(this.data.createdDate) : new Date(), Validators.required]
     });
   }
 
   onSubmit() {
-    // Verifica se o formulário é válido
     if (this.vendaForm.valid) {
-
-      this.servico.save(this.vendaForm.value).subscribe(
-        resposta => {
-          console.log(resposta);
-        },
-        error => {
-          console.log(error)
-        }
-      );
+      if (this.vendaForm.get('id')?.value) {
+        this.servico.update(this.vendaForm.value,this.vendaForm.get("id")?.value).subscribe(
+          resposta => {
+            this.showMessage("Item atualizado com sucesso!");
+          },
+          error => {
+            this.showMessage("Erro ao atualizar:\n" + error.error);
+          }
+        );
+      } else {
+        this.servico.save(this.vendaForm.value).subscribe(
+          resposta => {
+            this.showMessage("Item salvo com sucesso!");
+          },
+          error => {
+            this.showMessage("Erro ao salvar:\n" + error.error);
+          }
+        );
+      }
     } else {
       console.error("Formulário inválido. Por favor, preencha todos os campos obrigatórios.");
     }
   }
 
-  resetForm() {
-    this.vendaForm.reset({
-      id: null,
-      situation: '',
-      salePrice: null,
-      productPrice: null,
-      product: '',
-      client: '',
-      seller: '',
-      createdDate: new Date()
+  private showMessage(message: string) {
+    this.dialogRef = this.dialog.open(DialogMessageOkComponent, {
+      minWidth: "200px",
+      minHeight: "100px",
+      disableClose: true,
+      data: message
     });
-
-    // Remover manualmente os erros de validação
-    for (const control in this.vendaForm.controls) {
-      if (this.vendaForm.controls.hasOwnProperty(control)) {
-        this.vendaForm.controls[control].setErrors(null);
-      }
-    }
+    this.dialogRef.afterClosed().subscribe(value => {
+        this.dialogRefCurrent.close();
+    });
   }
 }
