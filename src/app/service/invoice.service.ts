@@ -40,14 +40,14 @@ export class InvoiceService {
   }
 
   getClienteTotal(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/totalCliente`);
+    return this.http.get<any>(`${this.baseUrl}/getHighestClient`);
   }
 
   getProdutoTotal(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/totalProduto`);
+    return this.http.get<any>(`${this.baseUrl}/getHighestProduct`);
   }
 
   getVendedorTotal(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/totalVendedor`);
+    return this.http.get<any>(`${this.baseUrl}/getHighestSeller`);
   }
 }

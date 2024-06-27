@@ -101,8 +101,8 @@ export class AnalyticsComponent implements OnInit{
 
     this.invoiceService.getTotalSalesPrice(formattedInitialDate, formattedFinalDate).subscribe(
       data => {
-        const dates = data.map(d => format(new Date(d[0]), 'dd/MM/yyyy'));
-        const sales = data.map(d => d[1]);
+        const dates = data.map(d => format(new Date(d.createdDate), 'dd/MM/yyyy'));
+        const sales = data.map(d => d.totalSales);
         this.chartOptionLinha = {
           xAxis: {
             type: 'category',
@@ -138,8 +138,8 @@ export class AnalyticsComponent implements OnInit{
   getClienteTotal() {
     this.invoiceService.getClienteTotal().subscribe(
       (data: any) => {
-        if (data && data.length > 0) {
-          this.clienteData = data[0];
+        if (data) {
+          this.clienteData = data;
         }
       },
       (error) => {
@@ -152,8 +152,8 @@ export class AnalyticsComponent implements OnInit{
   getProdutoTotal() {
     this.invoiceService.getProdutoTotal().subscribe(
       (data: any) => {
-        if (data && data.length > 0) {
-          this.produtoData = data[0]; // Pegando o primeiro produto com maior valor
+        if (data) {
+          this.produtoData = data; // Pegando o primeiro produto com maior valor
         }
       },
       (error) => {
@@ -165,8 +165,8 @@ export class AnalyticsComponent implements OnInit{
   getVendedorTotal() {
     this.invoiceService.getVendedorTotal().subscribe(
       (data: any) => {
-        if (data && data.length > 0) {
-          this.vendedorData = data[0]; // Pegando o primeiro vendedor com maior valor
+        if (data) {
+          this.vendedorData = data; // Pegando o primeiro vendedor com maior valor
         }
       },
       (error) => {

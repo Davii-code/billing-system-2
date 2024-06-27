@@ -16,10 +16,10 @@
     </mat-card-header>
     <mat-card-content>
       <p *ngIf="clienteData; else noData">
-        Cliente: <strong>{{ clienteData[0] }}</strong>
+        Cliente: <strong>{{ clienteData.name }}</strong>
       </p>
       <p *ngIf="clienteData; else noData">
-        Valor Total: <strong>R$ {{ clienteData[1].toFixed(2) }}</strong>
+        Valor Total: <strong>R$ {{ clienteData.totalSales.toFixed(2) }}</strong>
       </p>
     </mat-card-content>
     <ng-template #noData>
@@ -35,10 +35,10 @@
     </mat-card-header>
     <mat-card-content>
       <p *ngIf="produtoData; else noData">
-        Produto: <strong>{{ produtoData[0] }}</strong>
+        Produto: <strong>{{ produtoData.name }}</strong>
       </p>
       <p *ngIf="produtoData; else noData">
-        Valor Total: <strong>R$ {{ produtoData[1].toFixed(2) }}</strong>
+        Valor Total: <strong>R$ {{ produtoData.totalSales.toFixed(2) }}</strong>
       </p>
     </mat-card-content>
     <ng-template #noData>
@@ -54,10 +54,10 @@
     </mat-card-header>
     <mat-card-content>
       <p *ngIf="vendedorData; else noData">
-        Vendedor: <strong>{{ vendedorData[0] }}</strong>
+        Vendedor: <strong>{{ vendedorData.name }}</strong>
       </p>
       <p *ngIf="vendedorData; else noData">
-        Valor Total: <strong>R$ {{ vendedorData[1].toFixed(2) }}</strong>
+        Valor Total: <strong>R$ {{ vendedorData.totalSales.toFixed(2) }}</strong>
       </p>
     </mat-card-content>
     <ng-template #noData>
