@@ -1,5 +1,5 @@
 <div class="form-container">
-  <form [formGroup]="vendaForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="vendaForm" >
     <div class="form-row">
       <mat-form-field class="form-field">
         <mat-label>Cliente</mat-label>
@@ -28,9 +28,8 @@
       <mat-form-field class="form-field">
         <mat-label>Situação</mat-label>
         <mat-select formControlName="situation">
-          <mat-option value="Pendente">Pendente</mat-option>
-          <mat-option value="Concluída">Concluída</mat-option>
-          <mat-option value="Cancelada">Cancelada</mat-option>
+          <mat-option value="0">Aberto</mat-option>
+          <mat-option value="1">Fechado</mat-option>
         </mat-select>
         <mat-error *ngIf="vendaForm.get('situation')?.hasError('required')">
           Situação é obrigatória!
@@ -41,14 +40,14 @@
     <div class="form-row">
       <mat-form-field class="form-field">
         <mat-label>Preço do Produto</mat-label>
-        <input matInput formControlName="productPrice" placeholder="Preço do Produto" type="number">
+        <input matInput formControlName="productPrice" placeholder="Preço do Produto" type="type" mask="separator.2" prefix="R$ ">
         <mat-error *ngIf="vendaForm.get('productPrice')?.hasError('required')">
           Preço do Produto é obrigatório!
         </mat-error>
       </mat-form-field>
       <mat-form-field class="form-field">
         <mat-label>Preço de Venda</mat-label>
-        <input matInput formControlName="salePrice" placeholder="Preço de Venda" type="number">
+        <input matInput formControlName="salePrice" placeholder="Preço de Venda" type="type" mask="separator.2" prefix="R$ ">
         <mat-error *ngIf="vendaForm.get('salePrice')?.hasError('required')">
           Preço de Venda é obrigatório!
         </mat-error>
@@ -57,7 +56,7 @@
 
     <div mat-dialog-actions align="end">
       <button mat-button mat-dialog-close>Fechar</button>
-      <button mat-button color="primary" type="submit">
+      <button mat-button color="primary" type="submit" (click)="onSubmit()">
         Cadastrar
       </button>
     </div>

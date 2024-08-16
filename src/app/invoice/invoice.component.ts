@@ -1,4 +1,4 @@
-import {Component, computed, signal, ViewChild} from '@angular/core';
+import {Component, computed, OnInit, signal, ViewChild} from '@angular/core';
 import {
   MatCell, MatCellDef,
   MatColumnDef, MatHeaderCell, MatHeaderCellDef,
@@ -10,7 +10,7 @@ import {
 } from "@angular/material/table";
 import {Sale} from "../../shared/sale";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {InvoiceService} from "../service/invoice.service";
 import {CurrencyPipe} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
@@ -18,6 +18,7 @@ import {MatFormField, MatInput} from "@angular/material/input";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {SalesComponent} from "../sales/sales.component";
+import {DialogMessageOkComponent} from "../core/dialog-message-ok/dialog-message-ok.component";
 
 
 @Component({
@@ -48,14 +49,14 @@ import {SalesComponent} from "../sales/sales.component";
   templateUrl: './invoice.component.html',
   styleUrl: './invoice.component.css'
 })
-export class InvoiceComponent {
-
+export class InvoiceComponent implements OnInit{
   sale: Sale[] = [];
   displayedColumns: string[] = ['id', 'client', 'product', 'salePrice', 'seller', 'situation', 'productPrice', 'actions'];
   dataSource: MatTableDataSource<Sale>;
   length = 100;
-  pageSize = 10;
+  pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
+  private dialogRef!: MatDialogRef<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -64,38 +65,85 @@ export class InvoiceComponent {
   }
 
   ngOnInit() {
-    this.carregarDados();
+    this.recarregar()
   }
 
-  carregarDados() {
+
+  recarregar() {
+    this.sale = [];
+    this.dataSource.data = [];
     this.servico.getAll().subscribe((valor) => {
       this.sale = valor;
       this.dataSource.data = this.sale;
-      this.dataSource.paginator = this.paginator; // Configura o paginador
-      this.length = this.sale.length; // Atualiza o comprimento real dos dados
+      this.dataSource.paginator = this.paginator;
+      this.length = this.sale.length;
     });
   }
 
-  applyFilter(event: Event) {
-    let filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-  applySituationFilter(event: any) {
-    const filterValue = event.target.value;
-    this.dataSource.filterPredicate = (data: Sale, filter: string) => {
-      return filter === '' || data.situation === filter;
-    };
-
+  applyFilter(event: any) {
+    const filterValue = event.target.value.trim().toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
-  openDialog() {
+  applySituationFilter(event: any) {
+    const filterValue = event.value;
+    this.dataSource.filterPredicate = (data: Sale, filter: string) => {
+      return filter === '' || data.situation === filter;
+    };
+    this.dataSource.filter = filterValue;
+  }
+
+  executeDelete(sale1: Sale) {
+    this.servico.delete(sale1.id).subscribe({
+      next: value => {
+        this.showMessage("Excluído com sucesso!!!");
+        this.refresh(sale1);
+      },
+      error: error => {
+        this.showMessage(`Erro ao excluir!!: ${error.error}`);
+      }
+    });
+  }
+
+  refresh(sale1: Sale) {
+    const saleIndex = this.sale.findIndex((value) => value.id === sale1.id);
+    if (saleIndex >= 0) {
+      this.sale.splice(saleIndex, 1);
+      this.dataSource.data = [...this.sale];
+      this.length = this.sale.length;
+    }
+  }
+
+  private showMessage(message: string) {
+    this.dialogRef = this.dialog.open(DialogMessageOkComponent, {
+      minWidth: "200px",
+      minHeight: "100px",
+      disableClose: true,
+      data: message
+    });
+    this.dialogRef.afterClosed().subscribe(value => {
+      console.log("Botão fechar acionado");
+    });
+  }
+
+  openDialogAdicionar() {
     const dialogRef = this.dialog.open(SalesComponent, {
       width: '700px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.carregarDados();
+      this.recarregar();
+    });
+  }
+
+  openDialogEditar(sale:Sale) {
+    const dialogRef = this.dialog.open(SalesComponent, {
+      width: '700px',
+      data: sale
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.recarregar();
     });
   }
 }

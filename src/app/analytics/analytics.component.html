@@ -1,0 +1,71 @@
+<div class="filter-section">
+  <mat-form-field appearance="fill">
+    <mat-label>Filtro de Período</mat-label>
+    <mat-select [(value)]="selectedPeriod" (selectionChange)="applyPeriodFilter()">
+      <mat-option value="1">Último Mês</mat-option>
+      <mat-option value="2">Últimos Dois Meses</mat-option>
+      <mat-option value="3">Últimos Três Meses</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+<div class="card-analytics">
+  <mat-card class="cliente-card" appearance="outlined" *ngIf="clienteData">
+    <mat-card-header>
+      <mat-card-title>Cliente que Mais Comprou</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngIf="clienteData; else noData">
+        Cliente: <strong>{{ clienteData.name }}</strong>
+      </p>
+      <p *ngIf="clienteData; else noData">
+        Valor Total: <strong>R$ {{ clienteData.totalSales.toFixed(2) }}</strong>
+      </p>
+    </mat-card-content>
+    <ng-template #noData>
+      <mat-card-content>
+        <p>Nenhum dado disponível.</p>
+      </mat-card-content>
+    </ng-template>
+  </mat-card>
+
+  <mat-card class="produto-card" appearance="outlined" *ngIf="produtoData">
+    <mat-card-header>
+      <mat-card-title>Produto com Maior Valor</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngIf="produtoData; else noData">
+        Produto: <strong>{{ produtoData.name }}</strong>
+      </p>
+      <p *ngIf="produtoData; else noData">
+        Valor Total: <strong>R$ {{ produtoData.totalSales.toFixed(2) }}</strong>
+      </p>
+    </mat-card-content>
+    <ng-template #noData>
+      <mat-card-content>
+        <p>Nenhum dado disponível.</p>
+      </mat-card-content>
+    </ng-template>
+  </mat-card>
+
+  <mat-card class="vendedor-card" appearance="outlined" *ngIf="vendedorData">
+    <mat-card-header>
+      <mat-card-title>Vendedor com Maior Valor</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngIf="vendedorData; else noData">
+        Vendedor: <strong>{{ vendedorData.name }}</strong>
+      </p>
+      <p *ngIf="vendedorData; else noData">
+        Valor Total: <strong>R$ {{ vendedorData.totalSales.toFixed(2) }}</strong>
+      </p>
+    </mat-card-content>
+    <ng-template #noData>
+      <mat-card-content>
+        <p>Nenhum dado disponível.</p>
+      </mat-card-content>
+    </ng-template>
+  </mat-card>
+
+</div>
+<div echarts [options]="chartOptionLinha" class="chart-container"></div>

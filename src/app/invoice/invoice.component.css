@@ -9,28 +9,6 @@ th, td {
   border-bottom: 1px solid #ddd;
   text-align: center;
 }
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.form-row {
-  display: flex;
-  gap: 16px;
-}
-
-.form-field {
-  flex: 1;
-}
-
-@media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-  }
-}
-
-
 
 .buttons-acao {
   display: flex;
